@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Arun ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background: black;
+    color: white;
+    text-align: center;
+}
+
+/* Sections */
+.section { padding: 50px 20px; }
+.hidden { display: none; }
+
+/* Input + Button */
+input, button {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    margin: 5px;
+}
+button { background: pink; cursor: pointer; }
+
+/* Animated Name */
+.name {
+    font-size: 2.5em;
+    color: pink;
+    animation: glow 1.5s infinite alternate;
+}
+@keyframes glow {
+    from { text-shadow: 0 0 10px pink; }
+    to { text-shadow: 0 0 25px red; }
+}
+
+/* Chat */
+.chat { max-width: 300px; margin: auto; text-align: left; }
+.msg {
+    background: #222;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 5px;
+}
+
+/* Image */
+img { width: 250px; border-radius: 15px; }
+
+/* Hearts */
+.heart {
+    position: fixed;
+    color: red;
+    animation: float 5s linear infinite;
+}
+@keyframes float {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-800px); }
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🔐 PASSWORD -->
+<div id="lock" class="section">
+<h2>Private Page 🔐</h2>
+<p>Only for Arun 😌</p>
+<input type="password" id="pass" placeholder="Enter password">
+<br>
+<button onclick="checkPass()">Enter</button>
+<p id="wrong"></p>
+</div>
+
+<!-- ⏳ COUNTDOWN -->
+<div id="countdownPage" class="section hidden">
+<h2>Wait… 😏</h2>
+<h1 id="count">5</h1>
+</div>
+
+<!-- MAIN -->
+<div id="main" class="hidden">
+
+<audio autoplay loop>
+<source src="song.mp3">
+</audio>
+
+<div class="section">
+<h1 class="name">Arun Khanera Mahanta ❤️</h1>
+<p>Happy Birthday… don’t get too excited 😌</p>
+</div>
+
+<!-- 💬 CHAT -->
+<div class="section">
+<h2>Us 💬</h2>
+<div class="chat" id="chatBox"></div>
+</div>
+
+<!-- 📸 SLIDESHOW -->
+<div class="section">
+<h2>Our Memories 📸</h2>
+<img id="slide" src="photo1.jpg">
+</div>
+
+<!-- 🎁 GIFTS -->
+<div class="section">
+<h2>🎁 Your Gifts</h2>
+
+<button onclick="openGift('g1')">Open at your own risk 😤</button>
+<button onclick="openGift('g2')">Truth bomb 😏</button>
+<button onclick="openGift('g3')">Serious one… maybe ❤️</button>
+<button onclick="openGift('g4')">Do NOT click 😑</button>
+
+<div id="g1" class="hidden">
+<p>
+Happy Birthday 😌  
+You’re getting older… not wiser though.  
+
+But okay…  
+I still like you ❤️
+</p>
+</div>
+
+<div id="g2" class="hidden">
+<p>
+I deserve an award for handling you 😤  
+
+Annoying? YOU  
+Drama? ALSO YOU  
+
+But yeah… I still choose you 😌
+</p>
+</div>
+
+<div id="g3" class="hidden">
+<p>
+Okay jokes aside…  
+
+You matter to me.  
+A lot.  
+
+Distance is hard…  
+but it’s always you ❤️
+</p>
+</div>
+
+<div id="g4" class="hidden">
+<p>
+You really don’t listen 😑  
+
+Anyway…  
+I love you, idiot ❤️
+</p>
+</div>
+
+</div>
+
+<!-- 💖 FINAL -->
+<div class="section">
+<h2>Final Message ❤️</h2>
+<p>
+I miss you.  
+I wish I could be there today.  
+
+But until then…  
+this is my way of being with you ❤️
+</p>
+</div>
+
+</div>
+
+<script>
+// PASSWORD
+function checkPass() {
+    let p = document.getElementById("pass").value;
+    if(p === "1234") {
+        document.getElementById("lock").style.display = "none";
+        document.getElementById("countdownPage").style.display = "block";
+        startCountdown();
+    } else {
+        document.getElementById("wrong").innerText = "Wrong 😤";
+    }
+}
+
+// COUNTDOWN
+let c = 5;
+function startCountdown() {
+    let x = setInterval(() => {
+        c--;
+        document.getElementById("count").innerText = c;
+        if(c === 0) {
+            clearInterval(x);
+            document.getElementById("countdownPage").style.display = "none";
+            document.getElementById("main").style.display = "block";
+            startChat();
+        }
+    },1000);
+}
+
+// CHAT
+let msgs = [
+"Hey…",
+"Happy Birthday ❤️",
+"You’re annoying 😤",
+"But I still like you",
+"I miss you",
+"A lot",
+"Always you 😌"
+];
+
+let i = 0;
+function startChat() {
+    let box = document.getElementById("chatBox");
+    let x = setInterval(() => {
+        if(i < msgs.length) {
+            let d = document.createElement("div");
+            d.className = "msg";
+            d.innerText = msgs[i];
+            box.appendChild(d);
+            i++;
+        } else clearInterval(x);
+    },1000);
+}
+
+// GIFTS
+function openGift(id){
+    document.getElementById(id).style.display="block";
+}
+
+// SLIDESHOW
+let imgs = ["photo1.jpg","photo2.jpg","photo3.jpg"];
+let j=0;
+setInterval(()=>{
+    j=(j+1)%imgs.length;
+    let s=document.getElementById("slide");
+    if(s) s.src=imgs[j];
+},2000);
+
+// HEARTS
+setInterval(()=>{
+    let h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="❤️";
+    h.style.left=Math.random()*100+"vw";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),5000);
+},400);
+
+</script>
+
+</body>
+</html>
