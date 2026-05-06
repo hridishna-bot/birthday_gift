@@ -1,95 +1,147 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Birthday ❤️</title>
+<meta charset="UTF-8">
+<title>For You ❤️</title>
+
 <style>
 body {
-  font-family: Arial;
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #ff758c, #ff7eb3);
+  color: white;
   text-align: center;
-  background: black;
-  color: white; 
+  overflow-x: hidden;
+}
+
+.container {
+  padding: 30px;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+p {
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin: auto;
+}
+
+.gallery img {
+  width: 220px;
+  border-radius: 20px;
+  margin: 10px;
+  transition: transform 0.3s;
+}
+
+.gallery img:hover {
+  transform: scale(1.1);
+}
+
+button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 12px;
+  background: white;
+  color: #ff4b7d;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 15px;
 }
 
 .hidden {
   display: none;
 }
 
-img {
-  width: 200px;
-  margin: 10px;
-  border-radius: 10px;
+/* 🎉 Confetti */
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background: white;
+  top: 0;
+  animation: fall 3s linear infinite;
 }
 
-button {
-  padding: 10px;
-  margin-top: 10px;
+@keyframes fall {
+  to {
+    transform: translateY(100vh) rotate(360deg);
+  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- PIN -->
-<div id="pinPage">
-  <h2>Enter PIN 🔐</h2>
-  <input id="pinInput" type="password">
-  <br>
-  <button onclick="checkPin()">Unlock</button>
-  <p id="error"></p>
-</div>
+<div class="container" id="page1">
 
-<!-- COUNTDOWN -->
-<div id="countPage" class="hidden">
-  <h1 id="count">5</h1>
-</div>
+<h1>Happy Birthday Arun Khanera Mahanta 🎉</h1>
 
-<!-- MAIN -->
-<div id="mainPage" class="hidden">
-  <h1>Happy Birthday Arun 🎉</h1>
+<p>
+You’re annoying, dramatic… but still my favourite person ❤️
+</p>
 
-  <p>You are annoying… but still my favourite person ❤️</p>
-
+<div class="gallery">
   <img src="photo1.png">
   <img src="photo2.png">
   <img src="photo3.png">
-
-  <p style="margin-top:20px;">
-    One day the only thing between us will be a smile, not a screen ❤️
-  </p>
 </div>
 
+<button onclick="showMessage()">Don't click this 😒</button>
+
+<p id="secret" class="hidden">
+Okay fine… I love you more than I show 🥺❤️
+</p>
+
+<br>
+
+<button onclick="nextPage()">Next ➡️</button>
+
+</div>
+
+<!-- 💌 PAGE 2 -->
+<div class="container hidden" id="page2">
+
+<h1>Wait… one more thing ❤️</h1>
+
+<p>
+No matter how much we fight, laugh, or act stupid…  
+I’ll always choose you. Always. ❤️  
+<br><br>
+One day the only thing between us will be a smile, not a screen.
+</p>
+
+<button onclick="celebrate()">Click for magic 🎉</button>
+
+</div>
+
+<!-- 🎶 MUSIC -->
+<audio autoplay loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
 <script>
+function showMessage() {
+  document.getElementById("secret").style.display = "block";
+}
 
-// PIN CHECK
-function checkPin() {
-  let pin = document.getElementById("pinInput").value.trim();
+function nextPage() {
+  document.getElementById("page1").style.display = "none";
+  document.getElementById("page2").style.display = "block";
+}
 
-  if (pin === "bubu") {
-    document.getElementById("pinPage").style.display = "none";
-    document.getElementById("countPage").style.display = "block";
-    startCountdown();
-  } else {
-    document.getElementById("error").innerText = "Wrong PIN 😒";
+function celebrate() {
+  for (let i = 0; i < 100; i++) {
+    let confetti = document.createElement("div");
+    confetti.className = "confetti";
+    confetti.style.left = Math.random() * 100 + "vw";
+    confetti.style.backgroundColor = 
+      ["#fff","#ffd700","#ff4b7d","#00ffcc"][Math.floor(Math.random()*4)];
+    confetti.style.animationDuration = (Math.random() * 3 + 2) + "s";
+    document.body.appendChild(confetti);
   }
 }
-
-// COUNTDOWN
-function startCountdown() {
-  let num = 5;
-  let el = document.getElementById("count");
-
-  let timer = setInterval(() => {
-    num--;
-    el.innerText = num;
-
-    if (num === 0) {
-      clearInterval(timer);
-      document.getElementById("countPage").style.display = "none";
-      document.getElementById("mainPage").style.display = "block";
-    }
-  }, 1000);
-}
-
 </script>
 
 </body>
