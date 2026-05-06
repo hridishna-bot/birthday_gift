@@ -1,88 +1,28 @@
 <!DOCTYPE html>
-<html lang="en"> 
+<html>
 <head>
-<meta charset="UTF-8">
-<title>For You ❤️</title>
-
+<title>Birthday ❤️</title>
 <style>
-body{
-  margin:0;
-  font-family:Segoe UI,sans-serif;
-  background:black;
-  color:white;
-  text-align:center;
-  overflow:hidden;
+body {
+  font-family: Arial;
+  text-align: center;
+  background: black;
+  color: white;
 }
 
-/* SCENES */
-.scene{
-  position:absolute;
-  width:100%;
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-  opacity:0;
-  transition:1s;
-  z-index:2;
+.hidden {
+  display: none;
 }
 
-.active{
-  opacity:1;
+img {
+  width: 200px;
+  margin: 10px;
+  border-radius: 10px;
 }
 
-/* INPUT FIX */
-input, button{
-  padding:10px;
-  border-radius:10px;
-  border:none;
-  margin:5px;
-  position:relative;
-  z-index:3;
-}
-
-/* IMAGES */
-img{
-  width:200px;
-  margin:10px;
-  border-radius:15px;
-}
-
-#count{
-  font-size:70px;
-}
-
-/* HEARTS FIXED */
-.heart{
-  position:fixed;
-  bottom:-20px;
-  animation:floatUp 5s linear infinite;
-  pointer-events:none; /* THIS FIXES CLICK ISSUE */
-  z-index:1;
-}
-
-@keyframes floatUp{
-  to{
-    transform:translateY(-110vh);
-    opacity:0;
-  }
-}
-
-/* CONFETTI */
-.confetti{
-  position:fixed;
-  width:10px;
-  height:10px;
-  top:0;
-  animation:fall 3s linear infinite;
-  pointer-events:none;
-}
-
-@keyframes fall{
-  to{
-    transform:translateY(100vh) rotate(360deg);
-  }
+button {
+  padding: 10px;
+  margin-top: 10px;
 }
 </style>
 </head>
@@ -90,113 +30,66 @@ img{
 <body>
 
 <!-- PIN -->
-<div class="scene active" id="s1">
-  <h1>Enter PIN 🔐</h1>
-  <input type="password" id="pin" placeholder="Enter PIN">
-  <button onclick="checkPin()">Unlock ❤️</button>
-  <p id="wrong"></p>
+<div id="pinPage">
+  <h2>Enter PIN 🔐</h2>
+  <input id="pinInput" type="password">
+  <br>
+  <button onclick="checkPin()">Unlock</button>
+  <p id="error"></p>
 </div>
 
 <!-- COUNTDOWN -->
-<div class="scene" id="s2">
-  <h1>Get ready 🎬</h1>
-  <div id="count">5</div>
+<div id="countPage" class="hidden">
+  <h1 id="count">5</h1>
 </div>
 
-<!-- BDAY -->
-<div class="scene" id="s3">
+<!-- MAIN -->
+<div id="mainPage" class="hidden">
   <h1>Happy Birthday Arun 🎉</h1>
-</div>
 
-<!-- ROAST -->
-<div class="scene" id="s4">
-  <p>
-    You are lazy 😴<br>
-    dramatic 🎭<br>
-    stupid sometimes 🤡<br><br>
-    but still my favourite idiot ❤️
-  </p>
-</div>
+  <p>You are annoying… but still my favourite person ❤️</p>
 
-<!-- PHOTOS -->
-<div class="scene" id="s5">
-  <h1>Our memories 📸</h1>
   <img src="photo1.png">
   <img src="photo2.png">
   <img src="photo3.png">
-</div>
 
-<!-- FINAL -->
-<div class="scene" id="s6">
-  <p>
+  <p style="margin-top:20px;">
     One day the only thing between us will be a smile, not a screen ❤️
   </p>
 </div>
 
-<audio autoplay loop>
-  <source src="music.mp3">
-</audio>
-
 <script>
-// PIN FUNCTION
-function checkPin(){
-  let value = document.getElementById("pin").value.trim().toLowerCase();
 
-  if(value === "bubu"){
-    go(1,2);
-    countdown();
+// PIN CHECK
+function checkPin() {
+  let pin = document.getElementById("pinInput").value.trim();
+
+  if (pin === "bubu") {
+    document.getElementById("pinPage").style.display = "none";
+    document.getElementById("countPage").style.display = "block";
+    startCountdown();
   } else {
-    document.getElementById("wrong").innerHTML = "Wrong PIN 😒";
+    document.getElementById("error").innerText = "Wrong PIN 😒";
   }
-}
-
-// SCENE SWITCH
-function go(a,b){
-  document.getElementById("s"+a).classList.remove("active");
-  document.getElementById("s"+b).classList.add("active");
 }
 
 // COUNTDOWN
-function countdown(){
-  let c=5;
-  let el=document.getElementById("count");
+function startCountdown() {
+  let num = 5;
+  let el = document.getElementById("count");
 
-  let timer=setInterval(()=>{
-    c--;
-    el.innerHTML=c;
+  let timer = setInterval(() => {
+    num--;
+    el.innerText = num;
 
-    if(c===0){
+    if (num === 0) {
       clearInterval(timer);
-      go(2,3);
-      setTimeout(()=>go(3,4),2000);
-      setTimeout(()=>go(4,5),4000);
-      setTimeout(()=>go(5,6),7000);
-      setTimeout(()=>celebrate(),9000);
+      document.getElementById("countPage").style.display = "none";
+      document.getElementById("mainPage").style.display = "block";
     }
-  },1000);
+  }, 1000);
 }
 
-// CONFETTI
-function celebrate(){
-  for(let i=0;i<100;i++){
-    let c=document.createElement("div");
-    c.className="confetti";
-    c.style.left=Math.random()*100+"vw";
-    c.style.backgroundColor=["#fff","#ff4b7d","#ffd700","#00ffcc"][Math.floor(Math.random()*4)];
-    document.body.appendChild(c);
-  }
-}
-
-// HEARTS (NON-BLOCKING)
-setInterval(()=>{
-  let h=document.createElement("div");
-  h.className="heart";
-  h.innerHTML="❤️";
-  h.style.left=Math.random()*100+"vw";
-  h.style.fontSize=(Math.random()*20+15)+"px";
-  document.body.appendChild(h);
-  setTimeout(()=>h.remove(),5000);
-},300);
 </script>
 
 </body>
