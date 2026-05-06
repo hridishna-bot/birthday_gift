@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -14,6 +14,7 @@ body{
   overflow:hidden;
 }
 
+/* SCENES */
 .scene{
   position:absolute;
   width:100%;
@@ -24,26 +25,24 @@ body{
   flex-direction:column;
   opacity:0;
   transition:1s;
+  z-index:2;
 }
 
 .active{
   opacity:1;
 }
 
-input{
+/* INPUT FIX */
+input, button{
   padding:10px;
   border-radius:10px;
   border:none;
+  margin:5px;
+  position:relative;
+  z-index:3;
 }
 
-button{
-  padding:10px 20px;
-  border:none;
-  border-radius:10px;
-  margin-top:10px;
-  cursor:pointer;
-}
-
+/* IMAGES */
 img{
   width:200px;
   margin:10px;
@@ -54,11 +53,13 @@ img{
   font-size:70px;
 }
 
-/* hearts */
+/* HEARTS FIXED */
 .heart{
   position:fixed;
   bottom:-20px;
   animation:floatUp 5s linear infinite;
+  pointer-events:none; /* THIS FIXES CLICK ISSUE */
+  z-index:1;
 }
 
 @keyframes floatUp{
@@ -68,13 +69,14 @@ img{
   }
 }
 
-/* confetti */
+/* CONFETTI */
 .confetti{
   position:fixed;
   width:10px;
   height:10px;
   top:0;
   animation:fall 3s linear infinite;
+  pointer-events:none;
 }
 
 @keyframes fall{
@@ -101,7 +103,7 @@ img{
   <div id="count">5</div>
 </div>
 
-<!-- BIRTHDAY -->
+<!-- BDAY -->
 <div class="scene" id="s3">
   <h1>Happy Birthday Arun 🎉</h1>
 </div>
@@ -136,9 +138,9 @@ img{
 </audio>
 
 <script>
-// PIN
+// PIN FUNCTION
 function checkPin(){
-  let value = document.getElementById("pin").value.trim();
+  let value = document.getElementById("pin").value.trim().toLowerCase();
 
   if(value === "bubu"){
     go(1,2);
@@ -185,7 +187,7 @@ function celebrate(){
   }
 }
 
-// HEARTS
+// HEARTS (NON-BLOCKING)
 setInterval(()=>{
   let h=document.createElement("div");
   h.className="heart";
